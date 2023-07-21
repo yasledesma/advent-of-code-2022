@@ -42,8 +42,23 @@ func OpenFile(input string) *bufio.Scanner {
 }
 
 func CalcPartOne(line string) int {
+    var points int
+    letters := "abcdefghijklmnopqrstuvwxyz"
+    
     middleIndex := len(line) / 2
-    return CalcItems(line[:middleIndex], line[middleIndex:])
+    
+    for _, v := range line[:middleIndex] {
+        if strings.Contains(line[middleIndex:], string(v)) {
+            if strings.Index(letters, string(v)) != -1 {
+                points += strings.Index(letters, string(v)) + 1
+            } else {
+                points += strings.Index(letters, strings.ToLower(string(v))) + 27 
+            }
+            break
+        }
+    }
+    
+    return points 
 }
 
 func CalcPartTwo(lineOne, lineTwo, lineThree string) int {
@@ -60,24 +75,6 @@ func CalcPartTwo(lineOne, lineTwo, lineThree string) int {
                 }
                 break
             }
-        }
-    }
-    
-    return points 
-}
-
-func CalcItems(string1, string2 string) int {
-    var points int
-    letters := "abcdefghijklmnopqrstuvwxyz"
-    
-    for _, v := range string1 {
-        if strings.Contains(string2, string(v)) {
-            if strings.Index(letters, string(v)) != -1 {
-                points += strings.Index(letters, string(v)) + 1
-            } else {
-                points += strings.Index(letters, strings.ToLower(string(v))) + 27 
-            }
-            break
         }
     }
     
