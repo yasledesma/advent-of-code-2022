@@ -6,12 +6,16 @@ import (
     "log"
 )
 
-func OpenFile(file string) *bufio.Scanner {
+func OpenFile(file string) (*bufio.Scanner, *os.File) {
     input, err := os.Open(file)
 
-    if err != nil {
-        log.Fatal(err)
-    }
+    LogError(err)
     
-    return bufio.NewScanner(input)
+    return bufio.NewScanner(input), input
+}
+
+func LogError(err error) {
+    if err != nil {
+        log.Fatalln(err)
+    }
 }
